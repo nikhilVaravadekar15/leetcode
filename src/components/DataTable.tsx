@@ -21,9 +21,10 @@ export default function DataTable() {
                 fontSize="md"
                 verticalSpacing="md"
                 horizontalSpacing="sm"
-                className="rounded-lg overflow-hidden"
+                withBorder={true}
+                className="border border-dark-label-2 rounded-lg overflow-hidden"
             >
-                <thead className="text-black cursor-pointer bg-slate-200 hover:bg-slate-300">
+                <thead className="text-dark-fill-2 cursor-pointer bg-slate-200">
                     <tr className="text-lg font-bold">
                         <th>Id.</th>
                         <th>Title</th>
@@ -38,7 +39,7 @@ export default function DataTable() {
                         problems.map((problem: TProblem, index: number) => (
                             <tr
                                 key={problem.id}
-                                className="bg-slate-800 hover:bg-slate-700 text-white"
+                                className="bg-dark-fill-3 hover:bg-dark-divider-border-2 text-white"
                             >
                                 <td className="w-[5%]">
                                     <span
@@ -87,7 +88,7 @@ export default function DataTable() {
                                             problem.solutions.map((solution: TSolution, index: number) => {
                                                 return (
                                                     <Link key={index} href={solution.link}>
-                                                        <Code color="orange">{solution.language}</Code>
+                                                        <Code className="text-base">{solution.language}</Code>
                                                     </Link>
                                                 )
                                             })
@@ -98,7 +99,7 @@ export default function DataTable() {
                                     {
                                         problem.status && (
                                             <Tooltip label="Completed">
-                                                <TbChecks className="ml-4 p-1 h-6 w-6 text-green-500 cursor-pointer border border-green-500 rounded-full hover:text-white hover:bg-green-500" />
+                                                <TbChecks className="ml-4 p-1 h-6 w-6 text-dark-green-s cursor-pointer border border-green-500 rounded-full hover:text-white hover:bg-green-500" />
                                             </Tooltip>
                                         )
                                     }
@@ -119,6 +120,9 @@ export default function DataTable() {
                         },
                         '&[type]': {
                             color: theme.white
+                        },
+                        '&[type]:hover': {
+                            color: theme.black
                         },
                     },
                 })}

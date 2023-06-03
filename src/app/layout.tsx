@@ -17,7 +17,7 @@ export default function RootLayout({
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <link rel="shortcut icon" href="/assets/images/favicon.png" type="image/x-icon" />
       </head>
-      <body className="bg-gray-900">
+      <body className="bg-dark-layer-2">
         {children}
       </body>
     </html>

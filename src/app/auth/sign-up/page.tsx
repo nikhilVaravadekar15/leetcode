@@ -13,7 +13,7 @@ export default function Signup() {
     <div className="relative h-screen flex items-center justify-center">
       <div className="flex items-center justify-center my-4">
         <div className="bg-gradient-to-r from-orange-400 via-pink-400 to-teal-400 p-1 rounded-md">
-          <div className="flex gap-2 flex-col px-4 py-4 bg-gray-700 sm:px-4 lg:px-6 sm:py-8 lg:py-12">
+          <div className="flex gap-2 flex-col px-4 py-4 bg-dark-layer-1 sm:px-4 lg:px-6 sm:py-8 lg:py-12">
             <Link href={"/"} className="flex gap-2 items-center cursor-pointer font-bold text-white">
               <HiArrowNarrowLeft className="w-5 h-5" />
               <span className="text-xl leading-tight sm:text-2xl">Home</span>
