@@ -1,10 +1,6 @@
 import { AiOutlineLogout } from "react-icons/ai";
 import { RiUserSettingsLine } from "react-icons/ri";
-
-type TSlider = {
-    title: string
-    icon: React.ReactNode
-}
+import { TSlider } from "../types";
 
 const profileMenuItems: TSlider[] = [
     {

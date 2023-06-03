@@ -4,7 +4,8 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { IoMdSearch } from 'react-icons/io'
 import React, { useEffect, useState } from 'react'
-import { profileMenuItems } from '../../../../data'
+import { profileMenuItems } from '../../../data'
+import { TSlider } from '../../../types'
 
 
 export default function Home() {
@@ -66,7 +67,7 @@ function HeaderComponent() {
           isMenuOpen && (
             <div className="absolute w-48 z-20 top-16 -right-8 p-4 flex flex-col bg-white border rounded-md shadow-xl">
               {
-                profileMenuItems.map((item, index: number) => {
+                profileMenuItems.map((item: TSlider, index: number) => {
                   const isLastItem = index === profileMenuItems.length - 1;
                   return (
                     <div
