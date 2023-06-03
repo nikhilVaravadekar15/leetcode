@@ -6,6 +6,7 @@ import { IoMdSearch } from 'react-icons/io'
 import React, { useEffect, useState } from 'react'
 import { profileMenuItems } from '../../../data'
 import { TSlider } from '../../../types'
+import DataTable from '@/components/DataTable'
 
 
 export default function Home() {
@@ -28,9 +29,8 @@ export default function Home() {
             <IoMdSearch className="absolute top-1.5 right-1 p-2 w-10 h-10 font-black text-white cursor-pointer bg-orange-400 border border-orange-500 rounded-full" />
           </div>
         </div>
-        <div className="h-[92%] ">
-          {/* <DataGrid /> */}
-          <div>DataGrid</div>
+        <div className="h-[92%] mt-2">
+         <DataTable></DataTable>
         </div>
       </div>
     </main>

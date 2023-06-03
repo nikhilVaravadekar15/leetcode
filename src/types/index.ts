@@ -10,10 +10,10 @@ export type TProblem = {
     title: string
     difficulty: string
     category: string
-    solution: [
-        {
-            language: string
-            link: string
-        }
-    ]
+    solutions: TSolution[]
+}
+
+export type TSolution = {
+    language: string
+    link: string
 }
