@@ -25,10 +25,10 @@ export default function Home() {
         </Link>
         <div className="flex gap-4 items-center">
           <Link
-            href={"/problems-set"}
+            href={"/problem/set"}
             className="px-3 py-2 sm:px-5 sm:py-3 font-bold text-orange-400 bg-transparent border border-orange-400 rounded-full shadow-xl hover:text-white hover:bg-orange-500 hover:border-orange-500"
           >
-            Problems set
+            Problem set
           </Link>
           <Link
             href={"/auth/sign-in"}
