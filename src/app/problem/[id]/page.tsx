@@ -4,10 +4,10 @@ import React, { useEffect, useState } from 'react'
 import HeaderComponent from '@/components/HeaderComponent'
 import Split from 'react-split'
 import ProblemDescription from '@/components/ProblemDescription'
-// import { ScrollArea } from '@mantine/core'
+import PreferenceNav from '@/components/PreferenceNav'
 
 
-export default function Home() {
+export default function ProblemId() {
 
   return (
     <main className="mx-auto min-h-screen flex flex-col items-center overflow-hidden">
@@ -20,8 +20,17 @@ export default function Home() {
         className="split h-[91.8vh] w-full mx-auto flex flex-col"
       >
         <ProblemDescription />
-        <div className="bg-white p-4">
-          workspace
+        <div className="h-10 w-full mx-auto">
+          <PreferenceNav />
+          <Split
+            minSize={60}
+            direction="vertical"
+            className="h-[calc(91.8vh-40px)]"
+            sizes={[60, 40]}
+          >
+            <div className="bg-white">CodePlayground</div>
+            <div className="bg-white">TestCaseArea</div>
+          </Split>
         </div>
       </Split>
     </main>
