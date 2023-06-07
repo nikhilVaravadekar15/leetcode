@@ -17,3 +17,12 @@ export type TSolution = {
     language: string
     link: string
 }
+
+export type TUserauth = {
+    email: string
+    password: string
+}
+
+export type TSignup = TUserauth & {
+    fullname: string
+}
