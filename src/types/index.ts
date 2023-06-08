@@ -18,8 +18,11 @@ export type TSolution = {
     link: string
 }
 
-export type TUserauth = {
+export type TEmail = {
     email: string
+}
+
+export type TUserauth = TEmail & {
     password: string
 }
 
