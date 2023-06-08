@@ -10,7 +10,7 @@ import {
   HiArrowNarrowLeft,
   HiArrowNarrowRight,
 } from 'react-icons/hi'
-import React from 'react'
+import React, { useState } from 'react'
 import Link from 'next/link'
 import { TSignup } from '@/types'
 import { useForm } from '@mantine/form';
@@ -21,19 +21,15 @@ import "react-toastify/dist/ReactToastify.css";
 import { toast, ToastContainer } from 'react-toastify'
 import { checkSpecialCharacters, validateEmail } from '@/utility/utilities'
 import { Button, Notification, PasswordInput, TextInput } from '@mantine/core'
-import { useCreateUserWithEmailAndPassword } from 'react-firebase-hooks/auth';
-
-
+import { useCreateUserWithEmailAndPassword, useSendEmailVerification } from 'react-firebase-hooks/auth';
 
 
 export default function Signup() {
   const router = useRouter();
-  const [
-    createUserWithEmailAndPassword,
-    user,
-    loading,
-    error,
-  ] = useCreateUserWithEmailAndPassword(auth);
+  const [success, setSuccess] = useState<boolean>(false)
+  const [createUserWithEmailAndPassword, user, loading, error] = useCreateUserWithEmailAndPassword(auth);
+  const [sendEmailVerification, sending, emailVerificationError] = useSendEmailVerification(auth);
+
 
   const form = useForm<TSignup>({
     initialValues: {
@@ -72,14 +68,26 @@ export default function Signup() {
         );
       }
       else {
-        router.push("/problem/set")
+        try {
+          const emailVerificationSuccess = await sendEmailVerification()
+          if (emailVerificationSuccess) {
+            setSuccess(true)
+          }
+        }
+        catch (error: any) {
+          console.log(error);
+        } finally {
+          setTimeout(() => {
+            router.push("/auth/sign-in")
+          }, 5000)
+        }
       }
     } catch (error: any) {
       console.log(error);
     }
   }
 
-  if (error) {
+  if (error || emailVerificationError) {
     if (error?.code != "auth/email-already-in-use") {
       toast.error(
         "Something went wrong, please try again!",
@@ -104,6 +112,24 @@ export default function Signup() {
         pauseOnFocusLoss={true}
         hideProgressBar={false}
       />
+      {
+        success && (
+          <div className="absolute z-20 top-4 left-[50%] translate-x-[-50%]">
+            <Notification
+              title="Horray!!"
+              icon={<div className="cursor-pointer">🤘</div>}
+              classNames={{
+                root: "bg-dark-layer-1",
+                title: "text-white",
+                body: "text-white"
+              }}
+            >
+              <span>{"We'd like to notify you that we've sent a verification mail to "}</span>
+              <span className="font-bold">{form.values.email}</span>
+            </Notification>
+          </div>
+        )
+      }
       {
         loading && (
           <div className="absolute z-20 top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%]">
