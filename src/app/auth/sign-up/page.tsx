@@ -4,9 +4,6 @@ import {
   BsGithub
 } from 'react-icons/bs'
 import {
-  BiErrorCircle
-} from 'react-icons/bi'
-import {
   HiArrowNarrowLeft,
   HiArrowNarrowRight,
 } from 'react-icons/hi'
@@ -21,15 +18,15 @@ import "react-toastify/dist/ReactToastify.css";
 import { toast, ToastContainer } from 'react-toastify'
 import { checkSpecialCharacters, validateEmail } from '@/utility/utilities'
 import { Button, Notification, PasswordInput, TextInput } from '@mantine/core'
-import { useCreateUserWithEmailAndPassword, useSendEmailVerification } from 'react-firebase-hooks/auth';
+import { useAuthState, useCreateUserWithEmailAndPassword, useSendEmailVerification } from 'react-firebase-hooks/auth';
 
 
 export default function Signup() {
   const router = useRouter();
   const [success, setSuccess] = useState<boolean>(false)
-  const [createUserWithEmailAndPassword, user, loading, error] = useCreateUserWithEmailAndPassword(auth);
+  const [userAuthState, loadingAuthState, errorAuthState] = useAuthState(auth);
   const [sendEmailVerification, sending, emailVerificationError] = useSendEmailVerification(auth);
-
+  const [createUserWithEmailAndPassword, user, loading, error] = useCreateUserWithEmailAndPassword(auth);
 
   const form = useForm<TSignup>({
     initialValues: {
@@ -78,6 +75,7 @@ export default function Signup() {
           console.log(error);
         } finally {
           setTimeout(() => {
+            setSuccess(false)
             router.push("/auth/sign-in")
           }, 5000)
         }
@@ -97,6 +95,11 @@ export default function Signup() {
       );
     }
   }
+
+  if (userAuthState) {
+    router.push("/problem/set")
+  }
+
   return (
     <>
       <ToastContainer
@@ -117,12 +120,13 @@ export default function Signup() {
           <div className="absolute z-20 top-4 left-[50%] translate-x-[-50%]">
             <Notification
               title="Horray!!"
-              icon={<div className="cursor-pointer">🤘</div>}
               classNames={{
                 root: "bg-dark-layer-1",
                 title: "text-white",
                 body: "text-white"
               }}
+              onClose={() => setSuccess(false)}
+              icon={<div className="cursor-pointer">🤘</div>}
             >
               <span>{"We'd like to notify you that we've sent a verification mail to "}</span>
               <span className="font-bold">{form.values.email}</span>
@@ -131,7 +135,7 @@ export default function Signup() {
         )
       }
       {
-        loading && (
+        loadingAuthState || loading && (
           <div className="absolute z-20 top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%]">
             <CustomLoader />
           </div>

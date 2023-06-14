@@ -18,11 +18,12 @@ import CustomLoader from '@/components/CustomLoader'
 import "react-toastify/dist/ReactToastify.css";
 import { ToastContainer, toast } from 'react-toastify'
 import { Button, PasswordInput, TextInput } from '@mantine/core'
-import { useSignInWithEmailAndPassword } from 'react-firebase-hooks/auth'
+import { useAuthState, useSignInWithEmailAndPassword } from 'react-firebase-hooks/auth'
 
 
 export default function Signin() {
   const router = useRouter();
+  const [userAuthState, loadingAuthState, errorAuthState] = useAuthState(auth);
   const [signInWithEmailAndPassword, user, loading, error] = useSignInWithEmailAndPassword(auth);
 
   const form = useForm<TUserauth>({
@@ -76,6 +77,10 @@ export default function Signin() {
     }
   }
 
+  if (userAuthState) {
+    router.push("/problem/set")
+  }
+
   return (
     <>
       <ToastContainer
@@ -92,7 +97,7 @@ export default function Signin() {
         hideProgressBar={false}
       />
       {
-        loading && (
+        loadingAuthState || loading && (
           <div className="absolute z-20 top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%]">
             <CustomLoader />
           </div>

@@ -13,7 +13,6 @@ import Link from 'next/link';
 
 
 export default function DataTable() {
-    const elements = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
 
     return (
         <section className="h-full w-full flex flex-col justify-between">

@@ -10,12 +10,12 @@ import { TEmail } from '@/types';
 import { useForm } from '@mantine/form';
 import { useRouter } from 'next/navigation';
 import { auth } from '@/firebase/firebase';
-import { Button, Notification, TextInput } from '@mantine/core';
-import { validateEmail } from '@/utility/utilities';
-import CustomLoader from '@/components/CustomLoader';
 import "react-toastify/dist/ReactToastify.css";
 import { toast, ToastContainer } from 'react-toastify';
-import { useSendPasswordResetEmail } from 'react-firebase-hooks/auth';
+import { validateEmail } from '@/utility/utilities';
+import CustomLoader from '@/components/CustomLoader';
+import { Button, Notification, TextInput } from '@mantine/core';
+import { useAuthState, useSendPasswordResetEmail } from 'react-firebase-hooks/auth';
 
 const actionCodeSettings = {
   url: process.env.NEXT_PUBLIC_APP_URL + "/auth/sign-in",
@@ -24,6 +24,7 @@ const actionCodeSettings = {
 export default function ForgotPassword() {
   const router = useRouter();
   const [success, setSuccess] = useState<boolean>(false)
+  const [userAuthState, loadingAuthState, errorAuthState] = useAuthState(auth);
   const [sendPasswordResetEmail, sending, error] = useSendPasswordResetEmail(auth);
 
   const form = useForm<TEmail>({
@@ -74,6 +75,10 @@ export default function ForgotPassword() {
     }
   }
 
+  if (userAuthState) {
+    router.push("/problem/set")
+  }
+
   return (
     <>
       <ToastContainer
@@ -109,7 +114,7 @@ export default function ForgotPassword() {
         )
       }
       {
-        sending && (
+        loadingAuthState || sending && (
           <div className="absolute z-20 top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%]">
             <CustomLoader />
           </div>
