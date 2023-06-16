@@ -14,7 +14,7 @@ export default function Home() {
   const router = useRouter()
   const [userAuthState, loadingAuthState, errorAuthState] = useAuthState(auth);
 
-  if (!userAuthState || errorAuthState) {
+  if (errorAuthState) {
     // logout user and redirect 
     router.push("/auth/sign-in")
   }
