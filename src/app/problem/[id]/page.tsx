@@ -8,18 +8,25 @@ import PreferenceNav from '@/components/PreferenceNav'
 import CodePlayground from '@/components/CodePlayground'
 import TestCaseArea from '@/components/TestCaseArea'
 import { useRouter } from 'next/navigation'
-import { useAuthState } from 'react-firebase-hooks/auth'
+import { useAuthState, useSignOut } from 'react-firebase-hooks/auth'
 import { auth } from '@/firebase/firebase'
 import CustomLoader from '@/components/CustomLoader'
 
 
-export default function ProblemId() {
+export default async function ProblemId() {
   const router = useRouter()
+  const [signOut, loadingSignOut, errorSignOut] = useSignOut(auth);
   const [userAuthState, loadingAuthState, errorAuthState] = useAuthState(auth);
 
-  if (!userAuthState || errorAuthState) {
-    // logout user and redirect 
-    router.push("/auth/sign-in")
+  if (errorAuthState) {
+    try {
+      const success = await signOut();
+      if (success) {
+        router.push("/auth/sign-in")
+      }
+    } catch (error: any) {
+      console.log(error)
+    }
   }
 
   return (

@@ -5,18 +5,26 @@ import React, { useEffect, useState } from 'react'
 import DataTable from '@/components/DataTable'
 import HeaderComponent from '@/components/HeaderComponent'
 import { auth } from '@/firebase/firebase'
-import { useAuthState } from 'react-firebase-hooks/auth'
 import { useRouter } from 'next/navigation'
 import CustomLoader from '@/components/CustomLoader'
+import { useAuthState, useSignOut } from 'react-firebase-hooks/auth'
+import { toast } from 'react-toastify'
 
 
-export default function Home() {
+export default async function Home() {
   const router = useRouter()
+  const [signOut, loadingSignOut, errorSignOut] = useSignOut(auth);
   const [userAuthState, loadingAuthState, errorAuthState] = useAuthState(auth);
 
   if (errorAuthState) {
-    // logout user and redirect 
-    router.push("/auth/sign-in")
+    try {
+      const success = await signOut();
+      if (success) {
+        router.push("/auth/sign-in")
+      }
+    } catch (error: any) {
+      console.log(error)
+    }
   }
 
   return (
