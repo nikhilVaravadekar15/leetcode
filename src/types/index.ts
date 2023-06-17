@@ -6,12 +6,31 @@ export type TSlider = {
 
 export type TProblem = {
     id: string
-    status: boolean
+    status?: boolean
     title: string
     difficulty: string
     category: string
     solutions: TSolution[]
 }
+
+// local problem data
+export type TProblemLocal = TProblem & {
+    order: number
+    examples: TExample[]
+    constraints: string
+    starterCode: string
+    problemStatement: string
+    starterFunctionName: string
+    handlerFunction: ((fn: any) => boolean) | string
+};
+
+export type TExample = {
+    id: number;
+    inputText: string;
+    outputText: string;
+    explanation?: string;
+    imgage?: string;
+};
 
 export type TSolution = {
     language: string
