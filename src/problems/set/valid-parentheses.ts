@@ -66,7 +66,7 @@ const starterCodeValidParenthesesJS = `function validParentheses(s) {
 export const validParentheses: TProblemLocal = {
     id: "valid-parentheses",
     order: 4,
-    title: "4. Valid Parentheses",
+    title: "Valid Parentheses",
     category: "Array",
     difficulty: "Easy",
     solutions: solutions,

@@ -1,10 +1,11 @@
 import { Tooltip } from "@mantine/core";
 import { TbChecks } from "react-icons/tb";
 import { TiStarOutline } from "react-icons/ti";
+import { TExample, TProblemLocal } from "@/types";
 import { AiFillLike, AiFillDislike } from "react-icons/ai";
 
 
-export default function ProblemDescription() {
+export default function ProblemDescription({ problem }: { problem: TProblemLocal }) {
 
     return (
         <div className="bg-dark-layer-1">
@@ -20,14 +21,32 @@ export default function ProblemDescription() {
                     <div className="w-full">
                         <div className="flex space-x-4">
                             <div className="flex-1 flex gap-1 mr-2 text-lg text-white font-medium">
-                                <span>1.</span>
-                                <span>Two Sum</span>
+                                <span>{problem.order}.</span>
+                                <span>{problem.title}</span>
                             </div>
                         </div>
                         <div className="flex items-center mt-3">
-                            <div className="text-olive bg-olive inline-block rounded-[21px] bg-opacity-[.15] px-2.5 py-1 text-xs font-medium capitalize">
-                                Easy
-                            </div>
+                            {
+                                problem.difficulty.toLowerCase() === "easy" && (
+                                    <div className="w-fit py-0.5 px-2 text-sm cursor-pointer text-white bg-green-500 rounded-2xl">
+                                        {problem.difficulty}
+                                    </div>
+                                )
+                            }
+                            {
+                                problem.difficulty.toLowerCase() === "medium" && (
+                                    <div className="w-fit py-0.5 px-2 text-sm cursor-pointer text-white bg-yellow-500 rounded-2xl">
+                                        {problem.difficulty}
+                                    </div>
+                                )
+                            }
+                            {
+                                problem.difficulty.toLowerCase() === "hard" && (
+                                    <div className="w-fit py-0.5 px-2 text-sm cursor-pointer text-white bg-red-500 rounded-2xl">
+                                        {problem.difficulty}
+                                    </div>
+                                )
+                            }
                             <Tooltip label="Completed">
                                 <TbChecks className="ml-4 p-1 h-6 w-6 text-dark-green-s cursor-pointer border border-green-500 rounded-full hover:text-white hover:bg-green-500" />
                             </Tooltip>
@@ -43,73 +62,40 @@ export default function ProblemDescription() {
                                 <TiStarOutline />
                             </div>
                         </div>
-                        {/* Proflexblem Statement(paragraphs) */}
+                        {/* Problem Statement(paragraphs) */}
                         <div className="text-white text-sm">
-                            <p className="mt-3">
-                                Given an array of integers <code>nums</code> and an integer <code>target</code>, return
-                                <em>indices of the two numbers such that they add up to</em> <code>target</code>.
-                            </p>
-                            <p className="mt-3">
-                                You may assume that each input would have <strong>exactly one solution</strong>, and you
-                                may not use thesame element twice.
-                            </p>
-                            <p className="mt-3">You can return the answer in any order.</p>
+                            <div dangerouslySetInnerHTML={{ __html: problem.problemStatement }}></div>
                         </div>
                         {/* Examples */}
                         <div className="mt-4">
-                            {/* Example 1 */}
-                            <div>
-                                <p className="font-medium text-white ">Example 1: </p>
-                                <div className="example-card">
-                                    <pre>
-                                        <strong className="text-white">Input: </strong> nums = [2,7,11,15], target = 9{" "}
-                                        <br />
-                                        <strong>Output:</strong> [0,1] <br />
-                                        <strong>Explanation:</strong>Because nums[0] + nums[1] == 9, we return [0, 1].
-                                    </pre>
-                                </div>
-                            </div>
-                            {/* Example 2 */}
-                            <div>
-                                <p className="font-medium text-white ">Example 2: </p>
-                                <div className="example-card">
-                                    <pre>
-                                        <strong className="text-white">Input: </strong> nums = [3,2,4], target = 6{" "}
-                                        <br />
-                                        <strong>Output:</strong> [1,2] <br />
-                                        <strong>Explanation:</strong>Because nums[1] + nums[2] == 6, we return [1, 2].
-                                    </pre>
-                                </div>
-                            </div>
-                            {/* Example 3 */}
-                            <div>
-                                <p className="font-medium text-white ">Example 3: </p>
-                                <div className="example-card">
-                                    <pre>
-                                        <strong className="text-white">Input: </strong> nums = [3,3], target = 6
-                                        <br />
-                                        <strong>Output:</strong> [0,1] <br />
-                                    </pre>
-                                </div>
-                            </div>
+                            {/* Example */}
+                            {
+                                problem.examples.map((example: TExample, index: number) => {
+                                    return (
+                                        <div key={index}>
+                                            <p className="font-medium text-white ">Example {example.id}: </p>
+                                            {
+                                                example.image && (
+                                                    <img src={example.image} alt={`example image ${example.id}`} draggable={false} />
+                                                )
+                                            }
+                                            <div className="example-card">
+                                                <pre>
+                                                    <strong className="text-white">Input: </strong> {example.inputText} {" "} <br />
+                                                    <strong>Output:</strong> {example.outputText} <br />
+                                                    <strong>Explanation:</strong> {example.explanation}
+                                                </pre>
+                                            </div>
+                                        </div>
+                                    )
+                                })
+                            }
                         </div>
                         {/* Constraints */}
                         <div className="my-4">
                             <div className="text-white text-sm font-medium">Constraints:</div>
                             <ul className="text-white ml-5 list-disc">
-                                <li className="mt-2">
-                                    <code>2 ≤ nums.length ≤ 10</code>
-                                </li>
-
-                                <li className="mt-2">
-                                    <code>-10 ≤ nums[i] ≤ 10</code>
-                                </li>
-                                <li className="mt-2">
-                                    <code>-10 ≤ target ≤ 10</code>
-                                </li>
-                                <li className="mt-2 text-sm">
-                                    <strong>Only one valid answer exists.</strong>
-                                </li>
+                                <div dangerouslySetInnerHTML={{ __html: problem.constraints }}></div>
                             </ul>
                         </div>
                     </div>

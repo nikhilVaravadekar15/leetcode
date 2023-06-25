@@ -75,7 +75,7 @@ const examples: TExample[] = [
         id: 0,
         inputText: "head = [1,2,3,4,5]",
         outputText: "[5,4,3,2,1]",
-        imgage: example.src,
+        image: example.src,
     },
     {
         id: 1,
@@ -120,7 +120,7 @@ function reverseLinkedList(head) {
 export const reverseLinkedList: TProblemLocal = {
     id: "reverse-linked-list",
     order: 2,
-    title: "2. Reverse Linked List",
+    title: "Reverse Linked List",
     category: "Linked list",
     difficulty: "Medium",
     solutions: solutions,

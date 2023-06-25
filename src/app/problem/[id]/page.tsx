@@ -11,23 +11,45 @@ import { useRouter } from 'next/navigation'
 import { useAuthState, useSignOut } from 'react-firebase-hooks/auth'
 import { auth } from '@/firebase/firebase'
 import CustomLoader from '@/components/CustomLoader'
+import { problemMap } from '@/problems'
+import { TProblemLocal } from '@/types'
 
+type TProblemPageProps = {
+  params: {
+    id: string
+  }
+}
 
-export default async function ProblemId() {
+export default function ProblemId({ params }: TProblemPageProps) {
   const router = useRouter()
   const [signOut, loadingSignOut, errorSignOut] = useSignOut(auth);
   const [userAuthState, loadingAuthState, errorAuthState] = useAuthState(auth);
 
-  if (errorAuthState) {
-    try {
-      const success = await signOut();
-      if (success) {
-        router.push("/auth/sign-in")
-      }
-    } catch (error: any) {
-      console.log(error)
-    }
+  const { id } = params
+  const problem: TProblemLocal = problemMap[id]
+
+  if (!problem) {
+    router.push("/404")
+  } else {
+    problem.handlerFunction = problem.handlerFunction.toString()
   }
+
+  useEffect(() => {
+    async function handleAuth() {
+      if (errorAuthState) {
+        try {
+          const success = await signOut();
+          if (success) {
+            router.push("/auth/sign-in")
+          }
+        } catch (error: any) {
+          console.log(error)
+        }
+      }
+    }
+
+    handleAuth()
+  }, [])
 
   return (
     <>
@@ -38,7 +60,7 @@ export default async function ProblemId() {
           </div>
         )
       }
-      <main className="mx-auto min-h-screen flex flex-col items-center overflow-y-hidden">
+      <main className={`mx-auto min-h-screen flex flex-col items-center overflow-y-hidden ${loadingAuthState && "pointer-events-none"}`}>
         <div className="w-full px-4 bg-dark-layer-1 shadow-xl">
           <HeaderComponent />
         </div>
@@ -47,7 +69,7 @@ export default async function ProblemId() {
           direction="horizontal"
           className="split h-[91.8vh] w-full mx-auto flex flex-col overflow-hidden"
         >
-          <ProblemDescription />
+          <ProblemDescription problem={problem} />
           <div className="h-10 w-full mx-auto">
             <PreferenceNav />
             <Split
@@ -56,12 +78,25 @@ export default async function ProblemId() {
               className="h-[calc(91.8vh-40px)]"
               sizes={[60, 40]}
             >
-              <CodePlayground />
-              <TestCaseArea />
+              <CodePlayground code={problem.starterCode} />
+              <TestCaseArea problem={problem} />
             </Split>
           </div>
         </Split>
       </main>
     </>
   )
+}
+
+
+export async function generateStaticParams() {
+  const paths = Object.keys(problemMap).map((key) => ({
+    params: { id: key }
+  }))
+
+  console.log(paths)
+  return {
+    paths,
+    fallback: false
+  }
 }

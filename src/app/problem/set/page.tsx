@@ -1,31 +1,16 @@
 "use client"
 
 import { IoMdSearch } from 'react-icons/io'
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import DataTable from '@/components/DataTable'
 import HeaderComponent from '@/components/HeaderComponent'
 import { auth } from '@/firebase/firebase'
-import { useRouter } from 'next/navigation'
 import CustomLoader from '@/components/CustomLoader'
-import { useAuthState, useSignOut } from 'react-firebase-hooks/auth'
-import { toast } from 'react-toastify'
+import { useAuthState } from 'react-firebase-hooks/auth'
 
 
-export default async function Home() {
-  const router = useRouter()
-  const [signOut, loadingSignOut, errorSignOut] = useSignOut(auth);
+export default function Home() {
   const [userAuthState, loadingAuthState, errorAuthState] = useAuthState(auth);
-
-  if (errorAuthState) {
-    try {
-      const success = await signOut();
-      if (success) {
-        router.push("/auth/sign-in")
-      }
-    } catch (error: any) {
-      console.log(error)
-    }
-  }
 
   return (
     <>
@@ -36,7 +21,7 @@ export default async function Home() {
           </div>
         )
       }
-      <main className="container mx-auto min-h-screen flex flex-col items-center">
+      <main className={`container mx-auto min-h-screen flex flex-col items-center ${loadingAuthState && "pointer-events-none"}`}>
         <HeaderComponent />
         <div className="container h-[90vh] w-full mx-auto flex flex-col">
           <div className="h-[8%] flex items-center justify-between">

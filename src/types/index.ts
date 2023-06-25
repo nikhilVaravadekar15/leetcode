@@ -29,7 +29,7 @@ export type TExample = {
     inputText: string;
     outputText: string;
     explanation?: string;
-    imgage?: string;
+    image?: string;
 };
 
 export type TSolution = {

@@ -62,7 +62,7 @@ const starterCodeJumpGameJS: string = `function canJump(nums) {
 export const jumpGame: TProblemLocal = {
     id: "jump-game",
     order: 3,
-    title: "3. Jump Game",
+    title: "Jump Game",
     category: "Dynamic programming",
     difficulty: "Hard",
     solutions: solutions,

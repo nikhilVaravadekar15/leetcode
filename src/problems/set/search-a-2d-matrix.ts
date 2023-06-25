@@ -51,7 +51,7 @@ const examples: TExample[] = [
 [23,30,34,60]
 ], target = 3`,
         outputText: `true`,
-        imgage: example1.src,
+        image: example1.src,
     },
     {
         id: 1,
@@ -61,7 +61,7 @@ const examples: TExample[] = [
 [23,30,34,60]
 ], target = 13`,
         outputText: `false`,
-        imgage: example2.src,
+        image: example2.src,
     },
     {
         id: 2,
@@ -91,7 +91,7 @@ function searchMatrix(matrix, target) {
 export const search2DMatrix: TProblemLocal = {
     id: "search-a-2d-matrix",
     order: 5,
-    title: "5. Search a 2D Matrix",
+    title: "Search a 2D Matrix",
     category: "Array",
     difficulty: "Medium",
     solutions: solutions,

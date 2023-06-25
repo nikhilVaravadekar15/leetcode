@@ -86,7 +86,7 @@ const starterCodeTwoSum: string = `function twoSum(nums,target){
 export const twoSum: TProblemLocal = {
     id: "two-sum",
     order: 1,
-    title: "1. Two Sum",
+    title: "Two Sum",
     category: "Array",
     difficulty: "Easy",
     solutions: solutions,
