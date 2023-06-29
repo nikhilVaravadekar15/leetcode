@@ -1,11 +1,7 @@
 
-export type TSlider = {
-    title: string
-    icon: React.ReactNode
-}
-
 export type TProblem = {
     id: string
+    order: number
     status?: boolean
     title: string
     difficulty: string
@@ -13,9 +9,13 @@ export type TProblem = {
     solutions: TSolution[]
 }
 
+export type TProblemDB = TProblem & {
+    likes: number
+    dislikes: number
+}
+
 // local problem data
 export type TProblemLocal = TProblem & {
-    order: number
     examples: TExample[]
     constraints: string
     starterCode: string

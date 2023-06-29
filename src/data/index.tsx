@@ -1,88 +1,68 @@
-import { AiOutlineLogout } from "react-icons/ai";
-import { RiUserSettingsLine } from "react-icons/ri";
-import { TProblem, TSlider } from "../types";
-
-const profileMenuItems: TSlider[] = [
-    {
-        title: "My Profile",
-        icon: <RiUserSettingsLine className="h-4 w-4" />,
-    },
-    {
-        title: "Sign Out",
-        icon: <AiOutlineLogout className="h-4 w-4" />,
-    },
-];
+import { TProblem } from "../types";
 
 const problems: TProblem[] = [
     {
-        id: "1",
-        status: false,
+        order: 1,
+        id: "two-sum",
         title: "Two sum",
         difficulty: "Easy",
         category: "Array",
         solutions: [
             {
-                language: "js",
-                link: ""
-            },
-            {
-                language: "py",
+                language: "JS",
                 link: ""
             }
         ]
     },
     {
-        id: "2",
-        status: true,
+        order: 2,
+        id: "reverse-linked-list",
         title: "Reverse linked list",
         difficulty: "Medium",
         category: "Linked list",
         solutions: [
             {
-                language: "js",
+                language: "JS",
                 link: ""
             }
         ]
     },
     {
-        id: "3",
-        status: false,
+        order: 3,
+        id: "jump-game",
         title: "Jump games",
         difficulty: "Hard",
         category: "Dynamic programming",
         solutions: [
             {
-                language: "py",
+                language: "JS",
                 link: ""
             }
         ]
     },
     {
-        id: "4",
-        status: false,
+
+        order: 4,
+        id: "valid-parentheses",
         title: "Valid parentheses",
         difficulty: "Easy",
         category: "Array",
         solutions: [
             {
-                language: "js",
-                link: ""
-            },
-            {
-                language: "py",
+                language: "JS",
                 link: ""
             }
         ]
     },
     {
-        id: "2",
-        status: true,
+        order: 5,
+        id: "search-a-2d-matrix",
         title: "Search a 2d matrix",
         difficulty: "Medium",
         category: "Array",
         solutions: [
             {
-                language: "js",
+                language: "JS",
                 link: ""
             }
         ]
@@ -90,6 +70,5 @@ const problems: TProblem[] = [
 ]
 
 export {
-    profileMenuItems,
     problems
 }
